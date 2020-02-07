@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="btn">获取数据</button>
+    <script type="text/template" id="tel">
+        <p>
+            <span>用户名</span>
+            <span><%username%></span>
+        </p>
+        <p>
+            <span>密码</span>
+            <span><%pwd%></span>
+        </p>
+        <p>
+            <span>爱好1</span>
+            <span><%hobby.a%></span>
+        </p>
+        <p>
+            <span>爱好2</span>
+            <span><%hobby.b%></span>
+        </p>
+    </script>
+    <script src="./js/jquery.js"></script>
+    <script>
+    var $box = $('#box');
+    var $btn = $('#btn');
+
+    $btn.click(function() {
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject('Microsoft.XMLHTTP')) {
+            var xhr = new ActiveXObject('Microsoft.XMLHTTP')
+        } else {
+            throw new Error('浏览器版本过低');
+        };
+        var str = $('#tel').html();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+                data.forEach(function(item) {
+                    var res1 = str.replace(/<%(\w+(\.\w)*)%>/g, function(match, $1) {
+                        var arr = $1.split('.');
+                        var res = item;
+                        arr.forEach(function(item) {
+                            res = res[item];
+                        });
+                        return res;
+                    });
+                    var items = document.createElement('div');
+                    items.innerHTML = res1;
+                    $box.append(items);
+                });
+            }
+        };
+
+        xhr.open('get', '/get_msg', true);
+
+        xhr.send();
+    });
+
+    // 封装
+    function format(obj, str) {
+        return str.replace(/<%(\w+(\.\w)*)%>/g, function(match, $1) {
+            var arr = $1.split('.');
+            var res1 = obj;
+            arr.forEach(function(item) {
+                res1 = res1[item]
+            });
+            return res1;
+        })
+    }
+    </script>
+</body>
+</html>

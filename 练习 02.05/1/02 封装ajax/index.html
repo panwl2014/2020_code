@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        #box {
+            width: 400px;
+            height: 140px;
+            border: 1px solid #000;    
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="get">get</button>
+    <button id="post">post</button>
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/ickt.js"></script>
+    <script>
+    var $box = $('#box');
+    var $get = $('#get');
+    var $post = $('#post');
+    $get.click(function() {
+        ickt.get('/register', {username: 'zhangsan', pwd: '123', method: 'get'}, function(data) {
+            $box.html(data);
+        }, 'string');
+    });
+
+    $post.click(function() {
+        ickt.post('/login', {username: 'zhangsan', pwd: '123', method: 'post'}, function(data) {
+            $box.html(data);
+        }, 'string');
+    });
+
+
+    </script>
+</body>
+</html>

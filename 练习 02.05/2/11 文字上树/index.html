@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="button">加载数据</button>
+
+    <script src="./js/jquery.js"></script>
+    <script>
+    var $box = $('#box');
+    var $btn = $('#button');
+
+    // $btn.click(function() {
+    //     $.ajax({
+    //         url: '/get_msg',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             console.log(data);
+    //             data.forEach(function(item) {
+    //                 var username = document.createElement('div');
+    //                 var pwd = document.createElement('div');
+
+    //                 var span1 = document.createElement('span');
+    //                 span1.innerHTML = '用户名';
+    //                 var span2 = document.createElement('span');
+    //                 span2.innerHTML = item.username;
+    //                 username.appendChild(span1);
+    //                 username.appendChild(span2);
+
+    //                 var span3 = document.createElement('span');
+    //                 span3.innerHTML = '密码';
+    //                 var span4 = document.createElement('span');
+    //                 span4.innerHTML = item.pwd;
+    //                 pwd.appendChild(span3);
+    //                 pwd.appendChild(span4);
+
+    //                 $box.append(username);
+    //                 $box.append(pwd);
+    //             })
+    //         }
+    //     })
+    // });
+
+    // es6 写法
+    // $btn.click(function() {
+    //     $.ajax({
+    //         url: '/get_msg',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         success: function(data) {
+    //             data.forEach(function(item) {
+    //                 var str = ` 
+    //                     <p>
+    //                         <span>用户名</span>
+    //                         <span>${item.username}</span>
+    //                     </p>
+    //                     <p>
+    //                         <span>密码</span>
+    //                         <span>${item.pwd}</span>
+    //                     </p>
+    //                 `;
+    //                 var items = document.createElement('div');
+    //                 items.innerHTML = str;
+    //                 $box.append(items);
+    //             })
+    //         }
+    //     })
+    // });
+
+    </script>
+</body>
+</html>

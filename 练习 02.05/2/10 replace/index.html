@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // var str = 'i love you love';
+    // var res = str.replace('love', 'miss');
+    // console.log(res);
+    // var res1 = str.replace('love', 'miss').replace('love', 'miss');
+    // console.log(res1);
+    
+
+    // var res2 = str.replace(/love/g, 'miss');
+    // console.log(res2);
+
+
+    // var obj = {
+    //     name: 'zhangsan'
+    // }
+    // var res3 = str.replace(/love/g, obj.name);
+    // console.log(res3);
+
+
+    // var str = '用户名：name';
+    // var res4 = str.replace(/(name)/g, function(match, $1) {
+    //     return obj[$1];
+    // });
+    // console.log(res4);
+
+
+    var str = 'i love <%a.b.c%>';
+    var obj = {
+        a:{
+            b: {
+                c: 'content'
+            }
+        }
+    };
+
+    var res = str.replace(/<%(\w+(\.\w)*)%>/, function(match, $1) {
+        var arr = $1.split('.');
+        var res = obj;
+        arr.forEach(function(item) {
+            res = res[item];
+        });
+        return res;
+    });
+    console.log(res);
+    </script>
+</body>
+</html>

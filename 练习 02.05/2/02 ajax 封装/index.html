@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="get">get</button>
+    <button id="post">post</button>
+    <script src="./ickt.js"></script>
+    <script>
+    var box = document.getElementById('box');
+    var post = document.getElementById('post');
+    var get = document.getElementById('get');
+
+    get.onclick = function() {
+        ickt.get('/register', 'username=zhangsan&pwd=123&method=get', function(data) {
+            box.innerHTML= data;
+        }, 'string');
+    }
+
+
+    post.onclick = function() {
+        ickt.post('/login', 'username=zhangsan&pwd=123&method=post', function(data) {
+            box.innerHTML= data;
+        }, 'string');
+    }
+    </script>
+</body>
+</html>

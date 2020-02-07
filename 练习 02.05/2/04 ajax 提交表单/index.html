@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">用户名</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="用户名">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密码</label>
+                <input type="password" name="pwd" class="form-control" id="pwd" placeholder="密码">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">手机号</label>
+                <input type="tel" name="tel" class="form-control" id="tel" placeholder="手机号">
+            </div>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="city[]" id="inlineCheckbox1" value="武汉">武汉
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="city[]" id="inlineCheckbox2" value="黄冈">黄冈
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="city[]" id="inlineCheckbox3" value="北京">北京
+                </label>
+            </div>
+
+            <button type="button" id="button" class="btn btn-default">注册</button>
+        </form>
+        <form action=""></form>
+        <form action=""></form>
+        <form action=""></form>
+    </div>
+    <script src="./js/jquery-1.12.3.min.js"></script>
+    <script>
+    var $button = $('#button');
+    var $username = $('#username');
+    var $pwd = $('#pwd');
+
+    // 手动获取传输数据
+    // $button.click(function() {
+    //     var data = {};
+    //     data.username = $username.val(); 
+    //     data.pwd = $pwd.val();
+    //     $.get('/register', data, function(data) {
+    //         console.log(data);
+    //     }, 'json');
+    // });
+
+    // 表单序列化
+
+    var data = $(document.forms[0]).serialize();
+    $button.click(function(){
+        $.get('/register', data, function(data) {
+            console.log(data);
+        }, 'json');
+    })
+
+
+    </script>
+</body>
+
+</html>

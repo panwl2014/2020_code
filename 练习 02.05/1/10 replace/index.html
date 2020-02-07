@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var str = 'i love you';
+    // var str = 'i love love you';
+    // var res = str.replace('love', 'miss');
+    // console.log(str);
+    // console.log(res);
+
+    // console.log(str.replace('o', 'A').replace('o', 'A'));
+    // console.log(str.replace(/o/g, 'A'));
+
+    // var obj = {
+    //     name: 'zhangsan',
+    //     age: 18
+    // };
+    // console.log(str.replace('love', obj.name));
+
+    
+    // // 特殊字符转变量
+    // var str = '用户名1:username,用户名2:username';
+    // var obj = {
+    //     username: '张三'
+    // };
+    // // match 匹配到的内容 $1 是第一个括号内匹配到的内容
+    // console.log(str.replace(/(username)/g, function(match, $1) {
+    //     console.log(match);
+    //     // 返回值是要替换成的内容
+    //     return obj[match];
+    // }))
+
+
+    var str = 'i love <%a.b.c%>';
+    var obj = {
+        a:{
+            b: {
+                c: 'content'
+            }
+        }
+    };
+    
+    // <% + 字母（.+字母）*
+    var res = str.replace(/<%(\w+(\.\w+)*)%>/, function(match, $1) {
+        // console.log(match);
+        // console.log($1);
+        var arr = $1.split('.');
+        // console.log(arr);
+        var res = obj;
+        arr.forEach(function(item) {
+            res = res[item];
+        });
+        return res;
+    });
+
+    console.log(res);
+    
+    </script>
+</body>
+</html>

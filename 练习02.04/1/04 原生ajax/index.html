@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .success {
+            color: green;
+        }
+
+        ;
+
+        .error {
+            color: red;
+        }
+
+        #box {
+            width: 200px;
+            height: 40px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <button id="get">get请求</button>
+    <button id="post">post请求</button>
+    <script>
+        var box = document.getElementById('box');
+        var get = document.getElementById('get');
+        var post = document.getElementById('post');
+
+        // get 请求注册
+        get.onclick = function () {
+            // 兼容处理
+            console.log('get');
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject('Microsoft.XMLHTTP')) {
+                var xhr = new ActiveXObject('Microsoft.XMLHTTP')
+            } else {
+                throw new Error('请升级浏览器');
+            };
+
+            // 监听事件
+            xhr.onreadystatechange = function () {
+                //状态1-4
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // 获取响应数据并转为json对象
+                    var res = JSON.parse(xhr.responseText);
+                    // 判断
+                    if (res.error) {
+                        box.className = 'error';
+                    } else {
+                        box.className = 'success';
+                    }
+                    box.innerHTML = res.msg;
+                };
+            };
+
+            // 建立连接 连接方式 访问地址和携带数据 是否异步
+            // xhr.open('get', '/register?username=zhangsan&pwd=123', true)
+            xhr.open('get', '/register?username=zhangsan222&pwd=123', true)
+
+            // 发送请求
+            xhr.send();
+        };
+
+        // post 登录
+        post.onclick = function () {
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject('Microsoft.XMLHTTP')) {
+                var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            } else {
+                throw new Error('请升级浏览器');
+            }
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    if (result.error) {
+                        box.className = 'error';
+                    } else {
+                        box.className = 'success';
+                    }
+                    box.innerHTML = result.msg;
+                }
+            };
+
+            xhr.open('post', '/login', true);
+
+            // application/x-www-form-urlencoded默认值，键值对
+            // multipart/form-data 上传文件必须使用该种方式
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+
+            xhr.send('username=zhangsan1&pwd=123');
+        }  
+    </script>
+</body>
+
+</html>

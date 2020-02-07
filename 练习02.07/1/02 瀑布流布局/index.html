@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #e4e4e4;
+        }
+
+        ul {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        ul li {
+            list-style: none;
+            width: 236px;
+        }
+        .item img {
+            width: 100%;
+        }
+        .item {
+            width: 100%;
+            background-color: #fff;
+            margin-bottom: 20px;
+            font-size: 12px;
+            transition: all .3s;
+            position: relative;
+            top: 0;
+        }
+
+        .item .title {
+            padding: 10px 15px;
+            color: #444;
+        }
+
+        .item .icon {
+            padding: 0 15px 10px 15px;
+            color: rgb(129, 129, 129);
+        }
+
+        .item .bottom {
+            border-top: 1px solid rgb(228, 228, 228);
+            padding: 15px;
+            display: flex;
+        }
+        
+        .item .bottom .left span {
+            display: block;
+            width: 34px;
+            height: 34px;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .item .bottom .left span img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .item .bottom .right {
+            margin-left: 10px;
+        }
+
+        .item .bottom .right a {
+            color: #9e7e6b;
+            text-decoration: none;
+        }
+
+        .item .bottom .right span {
+            color: #999;
+        }
+
+        .item .bottom .right a:hover {
+            text-decoration: underline;
+        }
+
+        .item {
+
+        }
+        .item:hover {
+            box-shadow: 0 30px 20px rgba(0, 0, 0, 0.13);
+            position: relative;
+            top: -10px;
+        }
+    </style>
+    <link rel="stylesheet" href="./icon.css">
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script type="text/template" id="tpl">
+        <div class="item">
+            <div class="img">
+                <img src="http://hbimg.huabanimg.com/<%file.key%>" alt="">
+            </div>
+            <div class="title">
+                <p><%raw_text%></p>
+            </div>
+            <div class="icon">
+                <p>
+                    <span class="icon-loop"> <%repin_count%></span>&nbsp;&nbsp;&nbsp;
+                    <span class="icon-heart"> <%like_count%></span>
+                </p>
+            </div>
+            <div class="bottom">
+                <div class="left">
+                    <span class="user"><img src="http://hbimg.huabanimg.com/<%user.avatar.key%>" alt=""></span>
+                </div>
+                <div class="right">
+                    <p><a href="#"><%user.username%></a><span> &nbsp采集到</span></p>
+                    <p><a href="#"><%board.title%></a></p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/format.js"></script>
+    <script src="./js/getMin.js"></script>
+    <script src=""></script>
+    <script>
+        // 获取模板字符串
+        var tpl_str = $('#tpl').html();
+        var $lis = $('li');
+
+        // 高度数组
+        var height_arr = Array($lis.length).fill(0);
+
+        var index = 2;
+        // 封装加载数据方法
+        function getDate() {
+            $.ajax({
+                url: 'data/' + index + '.json',
+                dataType: 'json',
+                type: 'get',
+
+                // 成功执行代码
+                success: function(data) {
+                    // 遍历卡片信息对象
+                    data.pins.forEach(function(item) {
+                        console.log(item);
+                        // 格式化模板字符串
+                        var str = format(item, tpl_str);
+                        // 获取最小高度下标
+                        var idx = getMin(height_arr);
+                        // 上树
+                        $lis.eq(idx).append(str);
+                        // 写入高度
+                        height_arr[idx] += 236 *item.file.height / item.file.width + 150;
+                    });
+                    index++;
+                    index = index > 7 ? 7: index;
+                }
+            });
+        };
+        
+        getDate();
+
+        // 滚动加载
+        var timer = null;
+        document.onscroll = function() {
+            var page_height = document.body.clientHeight;
+            var window_height = document.documentElement.clientHeight;
+            var top_height = document.documentElement.scrollTop;
+
+            var bottom_height = page_height - window_height - top_height;
+            
+            if (bottom_height < 300) {
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    getDate();
+                }, 500)
+            }
+        }
+    </script>
+</body>
+</html>

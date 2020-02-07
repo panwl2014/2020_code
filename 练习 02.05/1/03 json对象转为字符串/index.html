@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var obj = {
+        name: 'zhangsan',
+        sex: 'man'
+    };
+    
+    // json扩展
+    var str = JSON.stringify(obj);
+
+    console.log(JSON.parse(str));
+
+    // 加括号形成表达式
+    console.log(eval('(' + str + ')'));
+
+    // 自执行
+    console.log(new Function('return' + str)());
+
+    </script>
+</body>
+</html>

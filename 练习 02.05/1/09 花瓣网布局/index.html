@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+        ul li {
+            list-style-type: none;
+            width: 300px;
+        }
+        ul li img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+    var lis = document.getElementsByTagName('li');
+    var idx = 0;
+    var height_arr = new Array(lis.length).fill(0);
+    console.log(height_arr);
+    for (var i  = 0; i < 100; i++) {
+        var img = new Image();
+        img.src = 'imgs/' + i + '.png';
+        img.onload = function() {
+            // lis[idx % 3].appendChild(this);
+            // idx++;
+
+            var min = get_Min(height_arr);
+            lis[min].appendChild(this);
+            height_arr[min] += this.height;
+        }
+    };
+
+    // 获取最小高度的li
+    function get_Min(arr) {
+        var min = 0;
+        for (var i = 0; i < arr.length; i++) {
+            // 比较高度
+            // 返回低的
+            // 循环比较
+            // 最终返回
+            if ((arr[i] < arr[min])) {
+                min = i;
+            }
+        }
+        return min;
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    if (window.XMLHttpRequest) {
+        var xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject('Micorsoft.XMLHTTP')) {
+        var xhr = new ActiveXObject('Micorsoft.XMLHTTP')
+    } else {
+        throw new Error('请升级浏览器');
+    };
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+
+    // 不转码#会识别为锚点
+    var username = encodeURIComponent('aa你好#bbb你好111');
+    // var username = decodeURIComponent(username);
+    console.log(username)
+    xhr.open('get', '/register?username=' + username + '&pwd=123', true)
+    xhr.send();
+    </script>
+</body>
+</html>

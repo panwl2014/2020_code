@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style>
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    #box {
+      width: 200px;
+      height: 40px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box"></div>
+  <button id="get">get</button>
+  <button id="post">post</button>
+  <button id="ajax">ajax</button>
+  <script src="./jquery-1.12.3.min.js"></script>
+  <script>
+    var $box = $("#box");
+    var $get = $("#get");
+    var $post = $("#post");
+    var $ajax = $("#ajax");
+
+    // get 用户名
+    $get.click(function() {
+      $.get(
+        '/register',
+        'username=zhangsan1&pwd=123',
+        function(data) {
+          if (data.error) {
+            $box.removeClass().addClass('success');
+          } else {
+            $box.removeClass().addClass('error');
+          }
+          $box.html(data.msg);
+        },
+        'json'
+      )
+    });
+
+    // post 登录
+    $post.click(function() {
+      $.post(
+        '/login',
+        'username=zhangsan&pwd=123',
+        function(data) {
+          if (data.error) {
+            $box.removeClass().addClass('error');
+          } else {
+            $box.removeClass().addClass('success');
+          }
+          $box.html(data.msg);
+        },
+        'json'
+      )
+    });
+
+    // ajax 登录
+    $ajax.click(function() {
+      $.ajax({
+        url: '/login',
+        data:'username=zhangsan&pwd=123',
+        dataType: 'json',
+        type: 'post',
+        success: function(data) {
+          if (data.error) {
+            $box.removeClass().addClass('error');
+          } else {
+            $box.removeClass().addClass('success');
+          }
+          $box.html(data.msg);
+        },
+      })
+    })
+
+  </script>
+</body>
+
+</html>
